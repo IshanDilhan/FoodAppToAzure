@@ -28,9 +28,7 @@ build/
 **/build/
 
 # Production
-.env
-.env.*
-*.local
+
 
 # IDE/editor settings
 .vscode/
@@ -48,8 +46,6 @@ Thumbs.db
 ehthumbs.db
 
 # Docker
-docker-compose.override.yml
-**/.env
 
 # Vercel
 .vercel/
