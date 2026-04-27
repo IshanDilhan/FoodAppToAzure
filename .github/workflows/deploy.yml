@@ -32,3 +32,18 @@ jobs:
         run: |
           docker build -t foodreg1181792482.azurecr.io/main-frontend:latest ./Frontend
           docker push foodreg1181792482.azurecr.io/main-frontend:latest
+
+      - name: Build and push Order Service
+        run: |
+          docker build -t foodreg1181792482.azurecr.io/order-service:latest ./OrderManagmentService
+          docker push foodreg1181792482.azurecr.io/order-service:latest
+
+      - name: Build and push Delivery Service
+        run: |
+          docker build -t foodreg1181792482.azurecr.io/delivery-service:latest ./DeliveryManagementService
+          docker push foodreg1181792482.azurecr.io/delivery-service:latest
+
+      - name: Build and push User Service
+        run: |
+          docker build -t foodreg1181792482.azurecr.io/user-service:latest ./UserManagmentService
+          docker push foodreg1181792482.azurecr.io/user-service:latest
