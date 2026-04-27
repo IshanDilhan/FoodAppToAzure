@@ -29,9 +29,10 @@ if (mongoURI) {
   mongoose
     .connect(mongoURI)
     .then(() => console.log('✅ User Service DB Connected'))
-    .catch((err) => console.error('❌ User Service DB Connection Error:', err));
-} else {
-  console.warn('⚠️ User Service: MONGO_URI is missing');
+    .catch((err) => {
+      console.error('❌ User Service DB Connection Error:', err);
+      // Don't exit the process, let the health check pass so we can see logs
+    });
 }
 
 const port = process.env.PORT || 4010;
