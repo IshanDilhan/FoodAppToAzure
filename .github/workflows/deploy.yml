@@ -18,7 +18,17 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Restaurant Service
         run: |
           docker build -t foodreg1181792482.azurecr.io/restaurant-service:latest ./RestaurantManagmentService
           docker push foodreg1181792482.azurecr.io/restaurant-service:latest
+
+      - name: Build and push Admin Frontend
+        run: |
+          docker build -t foodreg1181792482.azurecr.io/admin-frontend:latest ./Admin-Frontend
+          docker push foodreg1181792482.azurecr.io/admin-frontend:latest
+
+      - name: Build and push Main Frontend
+        run: |
+          docker build -t foodreg1181792482.azurecr.io/main-frontend:latest ./Frontend
+          docker push foodreg1181792482.azurecr.io/main-frontend:latest
