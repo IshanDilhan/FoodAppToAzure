@@ -40,4 +40,11 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`User Service is running on port: ${port}`);
 });
 
+// WORKAROUND: satisfy Azure probes looking at port 4000
+if (port != 4000) {
+    app.listen(4000, '0.0.0.0', () => {
+        console.log(`Probes listener running on port: 4000`);
+    });
+}
+
 export default app;
