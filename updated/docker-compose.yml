@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  restaurant-backend:
+    build:
+      context: ./RestaurantManagmentService
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./RestaurantManagmentService/.env
+
+  user-backend:
+    build:
+      context: ./UserManagmentService
+    ports:
+      - "4010:4010"
+    env_file:
+      - ./UserManagmentService/.env
+
+  order-backend:
+    build:
+      context: ./OrderManagmentService
+    ports:
+      - "4040:4040"
+    env_file:
+      - ./OrderManagmentService/.env
+
+  delivery-backend:
+    build:
+      context: ./DeliveryManagementService
+    ports:
+      - "4080:4080"
+    env_file:
+      - ./DeliveryManagementService/.env
+
+  admin-frontend:
+    build:
+      context: ./Admin-Frontend
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_RESTAURANT_API_URL=http://restaurant-backend:4000/api
+      - VITE_USER_API_URL=http://user-backend:4010/api
+      - VITE_ORDER_API_URL=http://order-backend:4040/api
+      - VITE_CART_API_URL=http://order-backend:4040/api
+      - VITE_DELIVER_API_URL=http://delivery-backend:4080/api
+      - VITE_REVIEW_API_URL=http://user-backend:4010/api
+
+
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "3001:80"
+    environment:
+      - VITE_RESTAURANT_API_URL=http://restaurant-backend:4000/api
+      - VITE_USER_API_URL=http://user-backend:4010/api
+      - VITE_ORDER_API_URL=http://order-backend:4040/api
+      - VITE_CART_API_URL=http://order-backend:4040/api
+      - VITE_DELIVER_API_URL=http://delivery-backend:4080/api
+      - VITE_REVIEW_API_URL=http://user-backend:4010/api

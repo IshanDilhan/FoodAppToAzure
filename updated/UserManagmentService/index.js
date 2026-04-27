@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
-app.use("/api/auth", userRoutes);
-app.use("/api/reviews", reviewRoutes);
-app.use("/api/all", allReviewRoutes);
+app.use("*/auth", userRoutes);
+app.use("*/reviews", reviewRoutes);
+app.use("*/all", allReviewRoutes);
 
 app.get('/', (req, res) => {
   res.send('User Management Backend WORKING');
