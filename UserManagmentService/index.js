@@ -26,12 +26,17 @@ app.get('/', (req, res) => {
 // DATABASE
 const mongoURI = process.env.MONGO_URI;
 if (mongoURI) {
-  mongoose.connect(mongoURI).then(() => console.log('✅ User Service DB Connected'));
+  mongoose
+    .connect(mongoURI)
+    .then(() => console.log('✅ User Service DB Connected'))
+    .catch((err) => console.error('❌ User Service DB Connection Error:', err));
+} else {
+  console.warn('⚠️ User Service: MONGO_URI is missing');
 }
 
 const port = process.env.PORT || 4010;
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on port: ${port}`);
+    console.log(`User Service is running on port: ${port}`);
 });
 
 export default app;
