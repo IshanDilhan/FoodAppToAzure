@@ -1,0 +1,25 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches: [ "master", "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: foodreg1181792482.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          cd RestaurantManagmentService
+          docker build -t foodreg1181792482.azurecr.io/restaurant-service:latest .
+          docker push foodreg1181792482.azurecr.io/restaurant-service:latest

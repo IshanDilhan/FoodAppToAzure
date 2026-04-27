@@ -8,8 +8,6 @@ services:
       - "4000:4000"
     env_file:
       - ./RestaurantManagmentService/.env
-    depends_on:
-      - mongo
 
   user-backend:
     build:
@@ -18,8 +16,6 @@ services:
       - "4010:4010"
     env_file:
       - ./UserManagmentService/.env
-    depends_on:
-      - mongo
 
   order-backend:
     build:
@@ -28,8 +24,6 @@ services:
       - "4040:4040"
     env_file:
       - ./OrderManagmentService/.env
-    depends_on:
-      - mongo
 
   delivery-backend:
     build:
@@ -38,8 +32,6 @@ services:
       - "4080:4080"
     env_file:
       - ./DeliveryManagementService/.env
-    depends_on:
-      - mongo
 
   admin-frontend:
     build:
@@ -67,14 +59,3 @@ services:
       - VITE_CART_API_URL=http://order-backend:4040/api
       - VITE_DELIVER_API_URL=http://delivery-backend:4080/api
       - VITE_REVIEW_API_URL=http://user-backend:4010/api
-      
-
-  mongo:
-    image: mongo
-    ports:
-      - "27018:27017"
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  mongo_data:

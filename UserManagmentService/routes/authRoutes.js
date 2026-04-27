@@ -6,6 +6,9 @@ import upload from "../middleware/multer.js";
 
 const router = express.Router();
 
+router.get("/test", (req, res) => {
+  res.send("Auth router is working");
+});
 
 router.post("/register", upload.single("profilePic"), register);
 router.post("/login", login);
