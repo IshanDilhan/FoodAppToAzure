@@ -6,7 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 // REGISTER
 export const registerRestaurant = async (req, res) => {
   try {
-    const { name, email, contactNumber, address, availableTime, password } = req.body;
+    const { name, email, contactNumber, address, availableTime, password, logo, coverImage } = req.body;
 
     const existing = await Restaurant.findOne({ email });
     if (existing) {
@@ -15,8 +15,20 @@ export const registerRestaurant = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const logoUpload = await cloudinary.uploader.upload(req.files.logo[0].path);
-    const coverUpload = await cloudinary.uploader.upload(req.files.coverImage[0].path);
+    let logoUrl = logo || "";
+    let coverImageUrl = coverImage || "";
+
+    // If files are uploaded via form-data, use Cloudinary
+    if (req.files) {
+      if (req.files.logo && req.files.logo[0]) {
+        const logoUpload = await cloudinary.uploader.upload(req.files.logo[0].path);
+        logoUrl = logoUpload.secure_url;
+      }
+      if (req.files.coverImage && req.files.coverImage[0]) {
+        const coverUpload = await cloudinary.uploader.upload(req.files.coverImage[0].path);
+        coverImageUrl = coverUpload.secure_url;
+      }
+    }
 
     const newRestaurant = new Restaurant({
       name,
@@ -25,8 +37,8 @@ export const registerRestaurant = async (req, res) => {
       address,
       availableTime,
       password: hashedPassword,
-      logo: logoUpload.secure_url,
-      coverImage: coverUpload.secure_url,
+      logo: logoUrl,
+      coverImage: coverImageUrl,
     });
 
     await newRestaurant.save();
@@ -37,7 +49,7 @@ export const registerRestaurant = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Registration failed." });
+    res.status(500).json({ success: false, message: "Registration failed.", error: err.message });
   }
 };
 
