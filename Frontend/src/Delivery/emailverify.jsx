@@ -43,6 +43,7 @@ const RiderAuthForm = () => {
             setSuccessMessage('Registration successful! Redirecting to login...');
           } else {
             localStorage.setItem('accessToken', response.data.accessToken);
+            //console.log("hiii")
             localStorage.setItem('refreshToken', response.data.refreshToken);
   
             const loginStatus = response.data.rider.status;
